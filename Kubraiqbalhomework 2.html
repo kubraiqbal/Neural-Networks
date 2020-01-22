@@ -1,0 +1,868 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head></head><body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+
+  <div class="border-box-sizing">
+    <div class="container">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Kubra Iqbal</span>
+<span class="c1">#csc 578</span>
+<span class="c1">#homework 2 </span>
+
+<span class="kn">import</span> <span class="nn">NN578_network</span> <span class="k">as</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">net4</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">load_network</span><span class="p">(</span><span class="s2">&quot;iris-423.dat&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create two data instances on the fly</span>
+<span class="n">inst1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">5.7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]))</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inst1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inst1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">sample1</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)]</span>
+<span class="n">inst2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.8</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]))</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inst2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inst2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)]</span>
+
+<span class="c1"># Call SGD with one instance for training and another for testing,</span>
+<span class="c1">#  for one epoch, with batch_size=1, and eta=1.0. </span>
+<span class="c1"># First with both training and test instances.</span>
+<span class="n">results10</span> <span class="o">=</span> <span class="n">net4</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">sample1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">sample2</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">results10</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">()</span>
+<span class="c1"># Then with just training instance</span>
+<span class="n">results11</span> <span class="o">=</span> <span class="n">net4</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">sample1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">results11</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[Epoch 0] Training: MSE=0.26673129, CE=1.61690061, LLH=0.45930834, correct=1/1, Accuracy = 1.00000000
+          Test : MSE=0.32440028, CE=1.85581862, LLH=0.58712192, correct=0/1, Accuracy = 0.00000000
+[[[1, 1.0, 0.26673128660052947, 1.6169006088912665, 0.4593083419698332]], [[0, 0.0, 0.3244002758397572, 1.855818621521176, 0.5871219174966811]]]
+
+[Epoch 0] Training: MSE=0.21078666, CE=1.38020720, LLH=0.39958448, correct=1/1, Accuracy = 1.00000000
+[[[1, 1.0, 0.2107866577006649, 1.3802072032795016, 0.39958447879106]], []]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Function to load the iris train-test (separate) data files</span>
+<span class="k">def</span> <span class="nf">my_load_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">no_trainfeatures</span><span class="p">,</span> <span class="n">no_testfeatures</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">entry</span><span class="p">[:</span><span class="n">no_trainfeatures</span><span class="p">],</span><span class="n">entry</span><span class="p">[</span><span class="n">no_trainfeatures</span><span class="p">:])</span> <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">ret</span><span class="p">])</span>
+    <span class="n">temp_inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">no_trainfeatures</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">temp_results</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="n">no_testfeatures</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_inputs</span><span class="p">,</span> <span class="n">temp_results</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dataset</span>
+
+<span class="c1"># Call the function to load the data</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">my_load_csv</span><span class="p">(</span><span class="s1">&#39;iris.csv&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">net4</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">load_network</span><span class="p">(</span><span class="s2">&quot;iris-423.dat&quot;</span><span class="p">)</span>
+<span class="n">iris_res</span> <span class="o">=</span> <span class="n">net4</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">iris_data</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="c1">#100 epochs, minibatch_size=5, eta=0.5.</span>
+<span class="c1"># part b </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[Epoch 0] Training: MSE=0.33989623, CE=1.93947802, LLH=1.07270335, correct=50/150, Accuracy = 0.33333333
+[Epoch 1] Training: MSE=0.35054136, CE=1.98910892, LLH=1.13654524, correct=50/150, Accuracy = 0.33333333
+[Epoch 2] Training: MSE=0.33898723, CE=1.93723493, LLH=1.12030613, correct=50/150, Accuracy = 0.33333333
+[Epoch 3] Training: MSE=0.30402667, CE=1.76598458, LLH=0.98309968, correct=51/150, Accuracy = 0.34000000
+[Epoch 4] Training: MSE=0.27946742, CE=1.65306466, LLH=0.88038172, correct=100/150, Accuracy = 0.66666667
+[Epoch 5] Training: MSE=0.25916154, CE=1.56196374, LLH=0.80792403, correct=100/150, Accuracy = 0.66666667
+[Epoch 6] Training: MSE=0.24333059, CE=1.48939578, LLH=0.75466382, correct=100/150, Accuracy = 0.66666667
+[Epoch 7] Training: MSE=0.23153034, CE=1.43260666, LLH=0.71520737, correct=100/150, Accuracy = 0.66666667
+[Epoch 8] Training: MSE=0.22283392, CE=1.38810432, LLH=0.68570972, correct=100/150, Accuracy = 0.66666667
+[Epoch 9] Training: MSE=0.21638630, CE=1.35286947, LLH=0.66332470, correct=100/150, Accuracy = 0.66666667
+[Epoch 10] Training: MSE=0.21155054, CE=1.32462457, LLH=0.64601912, correct=100/150, Accuracy = 0.66666667
+[Epoch 11] Training: MSE=0.20789080, CE=1.30174644, LLH=0.63237556, correct=100/150, Accuracy = 0.66666667
+[Epoch 12] Training: MSE=0.20511694, CE=1.28309614, LLH=0.62141506, correct=100/150, Accuracy = 0.66666667
+[Epoch 13] Training: MSE=0.20302930, CE=1.26784584, LLH=0.61246681, correct=100/150, Accuracy = 0.66666667
+[Epoch 14] Training: MSE=0.20147235, CE=1.25532061, LLH=0.60507322, correct=100/150, Accuracy = 0.66666667
+[Epoch 15] Training: MSE=0.20030105, CE=1.24486556, LLH=0.59890049, correct=100/150, Accuracy = 0.66666667
+[Epoch 16] Training: MSE=0.19936157, CE=1.23573475, LLH=0.59362044, correct=100/150, Accuracy = 0.66666667
+[Epoch 17] Training: MSE=0.19846286, CE=1.22686360, LLH=0.58868507, correct=100/150, Accuracy = 0.66666667
+[Epoch 18] Training: MSE=0.19720532, CE=1.21573647, LLH=0.58262039, correct=100/150, Accuracy = 0.66666667
+[Epoch 19] Training: MSE=0.19438939, CE=1.19440802, LLH=0.57068463, correct=100/150, Accuracy = 0.66666667
+[Epoch 20] Training: MSE=0.19092608, CE=1.16732717, LLH=0.55286608, correct=100/150, Accuracy = 0.66666667
+[Epoch 21] Training: MSE=0.19096008, CE=1.16133018, LLH=0.54312471, correct=100/150, Accuracy = 0.66666667
+[Epoch 22] Training: MSE=0.19353066, CE=1.16929236, LLH=0.53927297, correct=100/150, Accuracy = 0.66666667
+[Epoch 23] Training: MSE=0.19776431, CE=1.18560542, LLH=0.54036904, correct=100/150, Accuracy = 0.66666667
+[Epoch 24] Training: MSE=0.20178627, CE=1.20164379, LLH=0.54486505, correct=100/150, Accuracy = 0.66666667
+[Epoch 25] Training: MSE=0.20662471, CE=1.22178025, LLH=0.54960066, correct=100/150, Accuracy = 0.66666667
+[Epoch 26] Training: MSE=0.21241592, CE=1.24698192, LLH=0.55558579, correct=100/150, Accuracy = 0.66666667
+[Epoch 27] Training: MSE=0.22371923, CE=1.30062268, LLH=0.56667376, correct=100/150, Accuracy = 0.66666667
+[Epoch 28] Training: MSE=0.24331341, CE=1.40561068, LLH=0.59374334, correct=100/150, Accuracy = 0.66666667
+[Epoch 29] Training: MSE=0.24199777, CE=1.39912289, LLH=0.59138124, correct=100/150, Accuracy = 0.66666667
+[Epoch 30] Training: MSE=0.23946870, CE=1.38389155, LLH=0.59045876, correct=100/150, Accuracy = 0.66666667
+[Epoch 31] Training: MSE=0.23599222, CE=1.36317079, LLH=0.58667198, correct=100/150, Accuracy = 0.66666667
+[Epoch 32] Training: MSE=0.23289589, CE=1.34470190, LLH=0.58358964, correct=100/150, Accuracy = 0.66666667
+[Epoch 33] Training: MSE=0.23009235, CE=1.32814460, LLH=0.58092824, correct=100/150, Accuracy = 0.66666667
+[Epoch 34] Training: MSE=0.22722565, CE=1.31165773, LLH=0.57818266, correct=100/150, Accuracy = 0.66666667
+[Epoch 35] Training: MSE=0.22334286, CE=1.29038726, LLH=0.57330663, correct=100/150, Accuracy = 0.66666667
+[Epoch 36] Training: MSE=0.22467301, CE=1.29779632, LLH=0.57115706, correct=100/150, Accuracy = 0.66666667
+[Epoch 37] Training: MSE=0.22330533, CE=1.29038782, LLH=0.56749807, correct=100/150, Accuracy = 0.66666667
+[Epoch 38] Training: MSE=0.22251684, CE=1.28617554, LLH=0.56502888, correct=100/150, Accuracy = 0.66666667
+[Epoch 39] Training: MSE=0.22101269, CE=1.27807819, LLH=0.56246911, correct=100/150, Accuracy = 0.66666667
+[Epoch 40] Training: MSE=0.21812236, CE=1.26267441, LLH=0.55868410, correct=100/150, Accuracy = 0.66666667
+[Epoch 41] Training: MSE=0.20483844, CE=1.19437942, LLH=0.53995532, correct=102/150, Accuracy = 0.68000000
+[Epoch 42] Training: MSE=0.20591363, CE=1.20072089, LLH=0.53740017, correct=102/150, Accuracy = 0.68000000
+[Epoch 43] Training: MSE=0.20719959, CE=1.20799052, LLH=0.53623096, correct=102/150, Accuracy = 0.68000000
+[Epoch 44] Training: MSE=0.20621653, CE=1.20347843, LLH=0.53255753, correct=102/150, Accuracy = 0.68000000
+[Epoch 45] Training: MSE=0.21001333, CE=1.22367814, LLH=0.53696177, correct=102/150, Accuracy = 0.68000000
+[Epoch 46] Training: MSE=0.19907007, CE=1.16766667, LLH=0.51856894, correct=102/150, Accuracy = 0.68000000
+[Epoch 47] Training: MSE=0.21210025, CE=1.23557129, LLH=0.53930003, correct=102/150, Accuracy = 0.68000000
+[Epoch 48] Training: MSE=0.18942656, CE=1.11978422, LLH=0.50134001, correct=103/150, Accuracy = 0.68666667
+[Epoch 49] Training: MSE=0.20704620, CE=1.20942254, LLH=0.53171872, correct=102/150, Accuracy = 0.68000000
+[Epoch 50] Training: MSE=0.20664139, CE=1.20742322, LLH=0.53013769, correct=102/150, Accuracy = 0.68000000
+[Epoch 51] Training: MSE=0.20585190, CE=1.20331541, LLH=0.52882492, correct=102/150, Accuracy = 0.68000000
+[Epoch 52] Training: MSE=0.20493768, CE=1.19855574, LLH=0.52753879, correct=102/150, Accuracy = 0.68000000
+[Epoch 53] Training: MSE=0.20367382, CE=1.19199722, LLH=0.52569989, correct=102/150, Accuracy = 0.68000000
+[Epoch 54] Training: MSE=0.20210133, CE=1.18388439, LLH=0.52332046, correct=102/150, Accuracy = 0.68000000
+[Epoch 55] Training: MSE=0.20017765, CE=1.17402428, LLH=0.52031668, correct=103/150, Accuracy = 0.68666667
+[Epoch 56] Training: MSE=0.19791986, CE=1.16253436, LLH=0.51673089, correct=103/150, Accuracy = 0.68666667
+[Epoch 57] Training: MSE=0.19535639, CE=1.14958619, LLH=0.51262232, correct=103/150, Accuracy = 0.68666667
+[Epoch 58] Training: MSE=0.19251818, CE=1.13535662, LLH=0.50803700, correct=104/150, Accuracy = 0.69333333
+[Epoch 59] Training: MSE=0.18943311, CE=1.11999754, LLH=0.50299692, correct=105/150, Accuracy = 0.70000000
+[Epoch 60] Training: MSE=0.18612719, CE=1.10364146, LLH=0.49751024, correct=107/150, Accuracy = 0.71333333
+[Epoch 61] Training: MSE=0.18262490, CE=1.08640345, LLH=0.49158036, correct=108/150, Accuracy = 0.72000000
+[Epoch 62] Training: MSE=0.17894371, CE=1.06835637, LLH=0.48520180, correct=109/150, Accuracy = 0.72666667
+[Epoch 63] Training: MSE=0.17508312, CE=1.04947938, LLH=0.47834243, correct=111/150, Accuracy = 0.74000000
+[Epoch 64] Training: MSE=0.17101285, CE=1.02960346, LLH=0.47092162, correct=114/150, Accuracy = 0.76000000
+[Epoch 65] Training: MSE=0.16665820, CE=1.00834256, LLH=0.46277877, correct=114/150, Accuracy = 0.76000000
+[Epoch 66] Training: MSE=0.16186166, CE=0.98490759, LLH=0.45359032, correct=114/150, Accuracy = 0.76000000
+[Epoch 67] Training: MSE=0.15627013, CE=0.95755788, LLH=0.44263095, correct=114/150, Accuracy = 0.76000000
+[Epoch 68] Training: MSE=0.14901146, CE=0.92203809, LLH=0.42809508, correct=118/150, Accuracy = 0.78666667
+[Epoch 69] Training: MSE=0.13783717, CE=0.86753202, LLH=0.40530680, correct=119/150, Accuracy = 0.79333333
+[Epoch 70] Training: MSE=0.11933198, CE=0.77832991, LLH=0.36715043, correct=124/150, Accuracy = 0.82666667
+[Epoch 71] Training: MSE=0.10945932, CE=0.73115684, LLH=0.34605900, correct=128/150, Accuracy = 0.85333333
+[Epoch 72] Training: MSE=0.11737508, CE=0.76874624, LLH=0.36092694, correct=125/150, Accuracy = 0.83333333
+[Epoch 73] Training: MSE=0.10927923, CE=0.72982546, LLH=0.34306783, correct=128/150, Accuracy = 0.85333333
+[Epoch 74] Training: MSE=0.11557353, CE=0.75991264, LLH=0.35497794, correct=126/150, Accuracy = 0.84000000
+[Epoch 75] Training: MSE=0.10921708, CE=0.72906624, LLH=0.34090312, correct=128/150, Accuracy = 0.85333333
+[Epoch 76] Training: MSE=0.11301352, CE=0.74722204, LLH=0.34803226, correct=126/150, Accuracy = 0.84000000
+[Epoch 77] Training: MSE=0.10889294, CE=0.72699948, LLH=0.33878593, correct=128/150, Accuracy = 0.85333333
+[Epoch 78] Training: MSE=0.10998486, CE=0.73206457, LLH=0.34049768, correct=128/150, Accuracy = 0.85333333
+[Epoch 79] Training: MSE=0.10761777, CE=0.72025987, LLH=0.33502264, correct=129/150, Accuracy = 0.86000000
+[Epoch 80] Training: MSE=0.10678676, CE=0.71592045, LLH=0.33278789, correct=129/150, Accuracy = 0.86000000
+[Epoch 81] Training: MSE=0.10498448, CE=0.70680152, LLH=0.32852193, correct=129/150, Accuracy = 0.86000000
+[Epoch 82] Training: MSE=0.10319947, CE=0.69773603, LLH=0.32427520, correct=129/150, Accuracy = 0.86000000
+[Epoch 83] Training: MSE=0.10113032, CE=0.68724533, LLH=0.31940617, correct=129/150, Accuracy = 0.86000000
+[Epoch 84] Training: MSE=0.09890605, CE=0.67596080, LLH=0.31418349, correct=129/150, Accuracy = 0.86000000
+[Epoch 85] Training: MSE=0.09664843, CE=0.66447854, LLH=0.30887734, correct=131/150, Accuracy = 0.87333333
+[Epoch 86] Training: MSE=0.09450248, CE=0.65351008, LLH=0.30381584, correct=131/150, Accuracy = 0.87333333
+[Epoch 87] Training: MSE=0.09252367, CE=0.64333064, LLH=0.29912918, correct=131/150, Accuracy = 0.87333333
+[Epoch 88] Training: MSE=0.09065901, CE=0.63368593, LLH=0.29469877, correct=131/150, Accuracy = 0.87333333
+[Epoch 89] Training: MSE=0.08882565, CE=0.62417564, LLH=0.29033170, correct=131/150, Accuracy = 0.87333333
+[Epoch 90] Training: MSE=0.08696792, CE=0.61453152, LLH=0.28589242, correct=131/150, Accuracy = 0.87333333
+[Epoch 91] Training: MSE=0.08507876, CE=0.60472286, LLH=0.28135439, correct=131/150, Accuracy = 0.87333333
+[Epoch 92] Training: MSE=0.08320521, CE=0.59498389, LLH=0.27681506, correct=133/150, Accuracy = 0.88666667
+[Epoch 93] Training: MSE=0.08142377, CE=0.58569286, LLH=0.27244386, correct=133/150, Accuracy = 0.88666667
+[Epoch 94] Training: MSE=0.07979103, CE=0.57712893, LLH=0.26837303, correct=133/150, Accuracy = 0.88666667
+[Epoch 95] Training: MSE=0.07831577, CE=0.56933537, LLH=0.26463285, correct=133/150, Accuracy = 0.88666667
+[Epoch 96] Training: MSE=0.07697374, CE=0.56219254, LLH=0.26118019, correct=134/150, Accuracy = 0.89333333
+[Epoch 97] Training: MSE=0.07573288, CE=0.55554221, LLH=0.25795193, correct=135/150, Accuracy = 0.90000000
+[Epoch 98] Training: MSE=0.07456498, CE=0.54924517, LLH=0.25489053, correct=136/150, Accuracy = 0.90666667
+[Epoch 99] Training: MSE=0.07344778, CE=0.54319159, LLH=0.25194933, correct=136/150, Accuracy = 0.90666667
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">net4</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">load_network</span><span class="p">(</span><span class="s2">&quot;iris-423.dat&quot;</span><span class="p">)</span>
+<span class="n">iris_res</span> <span class="o">=</span> <span class="n">net4</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">iris_data</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
+
+<span class="c1">#stopaccuracy=0.75</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[Epoch 0] Training: MSE=0.33989623, CE=1.93947802, LLH=1.07270335, correct=50/150, Accuracy = 0.33333333
+[Epoch 1] Training: MSE=0.35054136, CE=1.98910892, LLH=1.13654524, correct=50/150, Accuracy = 0.33333333
+[Epoch 2] Training: MSE=0.33898723, CE=1.93723493, LLH=1.12030613, correct=50/150, Accuracy = 0.33333333
+[Epoch 3] Training: MSE=0.30402667, CE=1.76598458, LLH=0.98309968, correct=51/150, Accuracy = 0.34000000
+[Epoch 4] Training: MSE=0.27946742, CE=1.65306466, LLH=0.88038172, correct=100/150, Accuracy = 0.66666667
+[Epoch 5] Training: MSE=0.25916154, CE=1.56196374, LLH=0.80792403, correct=100/150, Accuracy = 0.66666667
+[Epoch 6] Training: MSE=0.24333059, CE=1.48939578, LLH=0.75466382, correct=100/150, Accuracy = 0.66666667
+[Epoch 7] Training: MSE=0.23153034, CE=1.43260666, LLH=0.71520737, correct=100/150, Accuracy = 0.66666667
+[Epoch 8] Training: MSE=0.22283392, CE=1.38810432, LLH=0.68570972, correct=100/150, Accuracy = 0.66666667
+[Epoch 9] Training: MSE=0.21638630, CE=1.35286947, LLH=0.66332470, correct=100/150, Accuracy = 0.66666667
+[Epoch 10] Training: MSE=0.21155054, CE=1.32462457, LLH=0.64601912, correct=100/150, Accuracy = 0.66666667
+[Epoch 11] Training: MSE=0.20789080, CE=1.30174644, LLH=0.63237556, correct=100/150, Accuracy = 0.66666667
+[Epoch 12] Training: MSE=0.20511694, CE=1.28309614, LLH=0.62141506, correct=100/150, Accuracy = 0.66666667
+[Epoch 13] Training: MSE=0.20302930, CE=1.26784584, LLH=0.61246681, correct=100/150, Accuracy = 0.66666667
+[Epoch 14] Training: MSE=0.20147235, CE=1.25532061, LLH=0.60507322, correct=100/150, Accuracy = 0.66666667
+[Epoch 15] Training: MSE=0.20030105, CE=1.24486556, LLH=0.59890049, correct=100/150, Accuracy = 0.66666667
+[Epoch 16] Training: MSE=0.19936157, CE=1.23573475, LLH=0.59362044, correct=100/150, Accuracy = 0.66666667
+[Epoch 17] Training: MSE=0.19846286, CE=1.22686360, LLH=0.58868507, correct=100/150, Accuracy = 0.66666667
+[Epoch 18] Training: MSE=0.19720532, CE=1.21573647, LLH=0.58262039, correct=100/150, Accuracy = 0.66666667
+[Epoch 19] Training: MSE=0.19438939, CE=1.19440802, LLH=0.57068463, correct=100/150, Accuracy = 0.66666667
+[Epoch 20] Training: MSE=0.19092608, CE=1.16732717, LLH=0.55286608, correct=100/150, Accuracy = 0.66666667
+[Epoch 21] Training: MSE=0.19096008, CE=1.16133018, LLH=0.54312471, correct=100/150, Accuracy = 0.66666667
+[Epoch 22] Training: MSE=0.19353066, CE=1.16929236, LLH=0.53927297, correct=100/150, Accuracy = 0.66666667
+[Epoch 23] Training: MSE=0.19776431, CE=1.18560542, LLH=0.54036904, correct=100/150, Accuracy = 0.66666667
+[Epoch 24] Training: MSE=0.20178627, CE=1.20164379, LLH=0.54486505, correct=100/150, Accuracy = 0.66666667
+[Epoch 25] Training: MSE=0.20662471, CE=1.22178025, LLH=0.54960066, correct=100/150, Accuracy = 0.66666667
+[Epoch 26] Training: MSE=0.21241592, CE=1.24698192, LLH=0.55558579, correct=100/150, Accuracy = 0.66666667
+[Epoch 27] Training: MSE=0.22371923, CE=1.30062268, LLH=0.56667376, correct=100/150, Accuracy = 0.66666667
+[Epoch 28] Training: MSE=0.24331341, CE=1.40561068, LLH=0.59374334, correct=100/150, Accuracy = 0.66666667
+[Epoch 29] Training: MSE=0.24199777, CE=1.39912289, LLH=0.59138124, correct=100/150, Accuracy = 0.66666667
+[Epoch 30] Training: MSE=0.23946870, CE=1.38389155, LLH=0.59045876, correct=100/150, Accuracy = 0.66666667
+[Epoch 31] Training: MSE=0.23599222, CE=1.36317079, LLH=0.58667198, correct=100/150, Accuracy = 0.66666667
+[Epoch 32] Training: MSE=0.23289589, CE=1.34470190, LLH=0.58358964, correct=100/150, Accuracy = 0.66666667
+[Epoch 33] Training: MSE=0.23009235, CE=1.32814460, LLH=0.58092824, correct=100/150, Accuracy = 0.66666667
+[Epoch 34] Training: MSE=0.22722565, CE=1.31165773, LLH=0.57818266, correct=100/150, Accuracy = 0.66666667
+[Epoch 35] Training: MSE=0.22334286, CE=1.29038726, LLH=0.57330663, correct=100/150, Accuracy = 0.66666667
+[Epoch 36] Training: MSE=0.22467301, CE=1.29779632, LLH=0.57115706, correct=100/150, Accuracy = 0.66666667
+[Epoch 37] Training: MSE=0.22330533, CE=1.29038782, LLH=0.56749807, correct=100/150, Accuracy = 0.66666667
+[Epoch 38] Training: MSE=0.22251684, CE=1.28617554, LLH=0.56502888, correct=100/150, Accuracy = 0.66666667
+[Epoch 39] Training: MSE=0.22101269, CE=1.27807819, LLH=0.56246911, correct=100/150, Accuracy = 0.66666667
+[Epoch 40] Training: MSE=0.21812236, CE=1.26267441, LLH=0.55868410, correct=100/150, Accuracy = 0.66666667
+[Epoch 41] Training: MSE=0.20483844, CE=1.19437942, LLH=0.53995532, correct=102/150, Accuracy = 0.68000000
+[Epoch 42] Training: MSE=0.20591363, CE=1.20072089, LLH=0.53740017, correct=102/150, Accuracy = 0.68000000
+[Epoch 43] Training: MSE=0.20719959, CE=1.20799052, LLH=0.53623096, correct=102/150, Accuracy = 0.68000000
+[Epoch 44] Training: MSE=0.20621653, CE=1.20347843, LLH=0.53255753, correct=102/150, Accuracy = 0.68000000
+[Epoch 45] Training: MSE=0.21001333, CE=1.22367814, LLH=0.53696177, correct=102/150, Accuracy = 0.68000000
+[Epoch 46] Training: MSE=0.19907007, CE=1.16766667, LLH=0.51856894, correct=102/150, Accuracy = 0.68000000
+[Epoch 47] Training: MSE=0.21210025, CE=1.23557129, LLH=0.53930003, correct=102/150, Accuracy = 0.68000000
+[Epoch 48] Training: MSE=0.18942656, CE=1.11978422, LLH=0.50134001, correct=103/150, Accuracy = 0.68666667
+[Epoch 49] Training: MSE=0.20704620, CE=1.20942254, LLH=0.53171872, correct=102/150, Accuracy = 0.68000000
+[Epoch 50] Training: MSE=0.20664139, CE=1.20742322, LLH=0.53013769, correct=102/150, Accuracy = 0.68000000
+[Epoch 51] Training: MSE=0.20585190, CE=1.20331541, LLH=0.52882492, correct=102/150, Accuracy = 0.68000000
+[Epoch 52] Training: MSE=0.20493768, CE=1.19855574, LLH=0.52753879, correct=102/150, Accuracy = 0.68000000
+[Epoch 53] Training: MSE=0.20367382, CE=1.19199722, LLH=0.52569989, correct=102/150, Accuracy = 0.68000000
+[Epoch 54] Training: MSE=0.20210133, CE=1.18388439, LLH=0.52332046, correct=102/150, Accuracy = 0.68000000
+[Epoch 55] Training: MSE=0.20017765, CE=1.17402428, LLH=0.52031668, correct=103/150, Accuracy = 0.68666667
+[Epoch 56] Training: MSE=0.19791986, CE=1.16253436, LLH=0.51673089, correct=103/150, Accuracy = 0.68666667
+[Epoch 57] Training: MSE=0.19535639, CE=1.14958619, LLH=0.51262232, correct=103/150, Accuracy = 0.68666667
+[Epoch 58] Training: MSE=0.19251818, CE=1.13535662, LLH=0.50803700, correct=104/150, Accuracy = 0.69333333
+[Epoch 59] Training: MSE=0.18943311, CE=1.11999754, LLH=0.50299692, correct=105/150, Accuracy = 0.70000000
+[Epoch 60] Training: MSE=0.18612719, CE=1.10364146, LLH=0.49751024, correct=107/150, Accuracy = 0.71333333
+[Epoch 61] Training: MSE=0.18262490, CE=1.08640345, LLH=0.49158036, correct=108/150, Accuracy = 0.72000000
+[Epoch 62] Training: MSE=0.17894371, CE=1.06835637, LLH=0.48520180, correct=109/150, Accuracy = 0.72666667
+[Epoch 63] Training: MSE=0.17508312, CE=1.04947938, LLH=0.47834243, correct=111/150, Accuracy = 0.74000000
+[Epoch 64] Training: MSE=0.17101285, CE=1.02960346, LLH=0.47092162, correct=114/150, Accuracy = 0.76000000
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[48]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">net2</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">load_network</span><span class="p">(</span><span class="s2">&quot;iris4-20-7-3.dat&quot;</span><span class="p">)</span>
+<span class="n">iris_res2</span> <span class="o">=</span> <span class="n">net2</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">iris_data</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[Epoch 0] Training: MSE=0.35101648, CE=1.98991328, LLH=1.13575832, correct=50/150, Accuracy = 0.33333333
+[Epoch 1] Training: MSE=0.35685102, CE=2.01618235, LLH=1.14912048, correct=50/150, Accuracy = 0.33333333
+[Epoch 2] Training: MSE=0.35639476, CE=2.01398864, LLH=1.14813574, correct=50/150, Accuracy = 0.33333333
+[Epoch 3] Training: MSE=0.35437837, CE=2.00490209, LLH=1.14575037, correct=50/150, Accuracy = 0.33333333
+[Epoch 4] Training: MSE=0.35223003, CE=1.99520139, LLH=1.14349029, correct=50/150, Accuracy = 0.33333333
+[Epoch 5] Training: MSE=0.35031508, CE=1.98646512, LLH=1.14156680, correct=50/150, Accuracy = 0.33333333
+[Epoch 6] Training: MSE=0.34871835, CE=1.97904087, LLH=1.13981143, correct=50/150, Accuracy = 0.33333333
+[Epoch 7] Training: MSE=0.34745549, CE=1.97297198, LLH=1.13794379, correct=50/150, Accuracy = 0.33333333
+[Epoch 8] Training: MSE=0.34653515, CE=1.96827108, LLH=1.13577658, correct=50/150, Accuracy = 0.33333333
+[Epoch 9] Training: MSE=0.34597833, CE=1.96497833, LLH=1.13322576, correct=50/150, Accuracy = 0.33333333
+[Epoch 10] Training: MSE=0.34585849, CE=1.96327553, LLH=1.13018086, correct=50/150, Accuracy = 0.33333333
+[Epoch 11] Training: MSE=0.34641558, CE=1.96388695, LLH=1.12647757, correct=50/150, Accuracy = 0.33333333
+[Epoch 12] Training: MSE=0.34829485, CE=1.96910258, LLH=1.12193156, correct=50/150, Accuracy = 0.33333333
+[Epoch 13] Training: MSE=0.35188427, CE=1.98043795, LLH=1.11552936, correct=50/150, Accuracy = 0.33333333
+[Epoch 14] Training: MSE=0.35544780, CE=1.99062312, LLH=1.10560605, correct=50/150, Accuracy = 0.33333333
+[Epoch 15] Training: MSE=0.35629434, CE=1.98841680, LLH=1.08903285, correct=50/150, Accuracy = 0.33333333
+[Epoch 16] Training: MSE=0.35167728, CE=1.96236428, LLH=1.06011415, correct=50/150, Accuracy = 0.33333333
+[Epoch 17] Training: MSE=0.34189652, CE=1.91298012, LLH=1.01785387, correct=50/150, Accuracy = 0.33333333
+[Epoch 18] Training: MSE=0.33022385, CE=1.85315834, LLH=0.96803742, correct=50/150, Accuracy = 0.33333333
+[Epoch 19] Training: MSE=0.31898719, CE=1.79373434, LLH=0.91815137, correct=50/150, Accuracy = 0.33333333
+[Epoch 20] Training: MSE=0.30857369, CE=1.73803009, LLH=0.87253846, correct=73/150, Accuracy = 0.48666667
+[Epoch 21] Training: MSE=0.29883166, CE=1.68617920, LLH=0.83259669, correct=99/150, Accuracy = 0.66000000
+[Epoch 22] Training: MSE=0.28983778, CE=1.63877994, LLH=0.79847476, correct=100/150, Accuracy = 0.66666667
+[Epoch 23] Training: MSE=0.28179228, CE=1.59680510, LLH=0.76970619, correct=100/150, Accuracy = 0.66666667
+[Epoch 24] Training: MSE=0.27482641, CE=1.56076812, LLH=0.74550589, correct=100/150, Accuracy = 0.66666667
+[Epoch 25] Training: MSE=0.26892582, CE=1.53040590, LLH=0.72496739, correct=100/150, Accuracy = 0.66666667
+[Epoch 26] Training: MSE=0.26394061, CE=1.50480218, LLH=0.70719973, correct=100/150, Accuracy = 0.66666667
+[Epoch 27] Training: MSE=0.25964608, CE=1.48273203, LLH=0.69144995, correct=100/150, Accuracy = 0.66666667
+[Epoch 28] Training: MSE=0.25579916, CE=1.46293691, LLH=0.67714808, correct=100/150, Accuracy = 0.66666667
+[Epoch 29] Training: MSE=0.25217186, CE=1.44425716, LLH=0.66388854, correct=100/150, Accuracy = 0.66666667
+[Epoch 30] Training: MSE=0.24857692, CE=1.42572868, LLH=0.65141314, correct=100/150, Accuracy = 0.66666667
+[Epoch 31] Training: MSE=0.24488810, CE=1.40667087, LLH=0.63959586, correct=100/150, Accuracy = 0.66666667
+[Epoch 32] Training: MSE=0.24104792, CE=1.38672969, LLH=0.62841090, correct=100/150, Accuracy = 0.66666667
+[Epoch 33] Training: MSE=0.23706064, CE=1.36585762, LLH=0.61788777, correct=100/150, Accuracy = 0.66666667
+[Epoch 34] Training: MSE=0.23297404, CE=1.34424136, LLH=0.60806825, correct=100/150, Accuracy = 0.66666667
+[Epoch 35] Training: MSE=0.22885750, CE=1.32220711, LLH=0.59897770, correct=101/150, Accuracy = 0.67333333
+[Epoch 36] Training: MSE=0.22478406, CE=1.30013746, LLH=0.59061590, correct=101/150, Accuracy = 0.67333333
+[Epoch 37] Training: MSE=0.22082080, CE=1.27842027, LLH=0.58296494, correct=101/150, Accuracy = 0.67333333
+[Epoch 38] Training: MSE=0.21702701, CE=1.25742812, LLH=0.57600583, correct=102/150, Accuracy = 0.68000000
+[Epoch 39] Training: MSE=0.21345644, CE=1.23751400, LLH=0.56973421, correct=102/150, Accuracy = 0.68000000
+[Epoch 40] Training: MSE=0.21016031, CE=1.21901269, LLH=0.56417010, correct=102/150, Accuracy = 0.68000000
+[Epoch 41] Training: MSE=0.20719102, CE=1.20225152, LLH=0.55936449, correct=102/150, Accuracy = 0.68000000
+[Epoch 42] Training: MSE=0.20460973, CE=1.18758865, LLH=0.55541417, correct=102/150, Accuracy = 0.68000000
+[Epoch 43] Training: MSE=0.20250272, CE=1.17550067, LLH=0.55249801, correct=102/150, Accuracy = 0.68000000
+[Epoch 44] Training: MSE=0.20100166, CE=1.16669143, LLH=0.55092458, correct=103/150, Accuracy = 0.68666667
+[Epoch 45] Training: MSE=0.20025752, CE=1.16195244, LLH=0.55106481, correct=103/150, Accuracy = 0.68666667
+[Epoch 46] Training: MSE=0.20020090, CE=1.16089350, LLH=0.55274085, correct=103/150, Accuracy = 0.68666667
+[Epoch 47] Training: MSE=0.19991789, CE=1.15865644, LLH=0.55361664, correct=103/150, Accuracy = 0.68666667
+[Epoch 48] Training: MSE=0.19756796, CE=1.14562935, LLH=0.54905475, correct=103/150, Accuracy = 0.68666667
+[Epoch 49] Training: MSE=0.19416471, CE=1.12731628, LLH=0.54201036, correct=104/150, Accuracy = 0.69333333
+[Epoch 50] Training: MSE=0.19185666, CE=1.11478337, LLH=0.53790347, correct=105/150, Accuracy = 0.70000000
+[Epoch 51] Training: MSE=0.18914521, CE=1.10022460, LLH=0.53245927, correct=105/150, Accuracy = 0.70000000
+[Epoch 52] Training: MSE=0.18658357, CE=1.08644444, LLH=0.52728757, correct=105/150, Accuracy = 0.70000000
+[Epoch 53] Training: MSE=0.18371481, CE=1.07113656, LLH=0.52112249, correct=105/150, Accuracy = 0.70000000
+[Epoch 54] Training: MSE=0.18083449, CE=1.05581230, LLH=0.51476979, correct=105/150, Accuracy = 0.70000000
+[Epoch 55] Training: MSE=0.17780124, CE=1.03978392, LLH=0.50782425, correct=105/150, Accuracy = 0.70000000
+[Epoch 56] Training: MSE=0.17487039, CE=1.02434706, LLH=0.50099791, correct=107/150, Accuracy = 0.71333333
+[Epoch 57] Training: MSE=0.17197155, CE=1.00920274, LLH=0.49413599, correct=108/150, Accuracy = 0.72000000
+[Epoch 58] Training: MSE=0.16919844, CE=0.99485113, LLH=0.48755799, correct=109/150, Accuracy = 0.72666667
+[Epoch 59] Training: MSE=0.16638703, CE=0.98050039, LLH=0.48086780, correct=109/150, Accuracy = 0.72666667
+[Epoch 60] Training: MSE=0.16355655, CE=0.96620930, LLH=0.47414144, correct=109/150, Accuracy = 0.72666667
+[Epoch 61] Training: MSE=0.16060140, CE=0.95142646, LLH=0.46709139, correct=112/150, Accuracy = 0.74666667
+[Epoch 62] Training: MSE=0.15757755, CE=0.93638462, LLH=0.45986411, correct=113/150, Accuracy = 0.75333333
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#4</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+<span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">iris_data</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[50]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">net4</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">Network</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="c1">#create a network</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[51]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">iris_res</span> <span class="o">=</span> <span class="n">net4</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="mi">50</span> <span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="c1">#testing</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[Epoch 0] Training: MSE=0.30065621, CE=1.85886348, LLH=0.97298979, correct=69/105, Accuracy = 0.65714286
+          Test : MSE=0.27817553, CE=1.74907291, LLH=0.90564272, correct=31/45, Accuracy = 0.68888889
+[Epoch 1] Training: MSE=0.25103886, CE=1.56505841, LLH=0.91000434, correct=69/105, Accuracy = 0.65714286
+          Test : MSE=0.23486639, CE=1.48661363, LLH=0.85190966, correct=31/45, Accuracy = 0.68888889
+[Epoch 2] Training: MSE=0.22868226, CE=1.42555684, LLH=0.77549945, correct=69/105, Accuracy = 0.65714286
+          Test : MSE=0.21590885, CE=1.36606917, LLH=0.73201049, correct=31/45, Accuracy = 0.68888889
+[Epoch 3] Training: MSE=0.21334846, CE=1.34829346, LLH=0.67561528, correct=69/105, Accuracy = 0.65714286
+          Test : MSE=0.20289745, CE=1.29926670, LLH=0.64150414, correct=31/45, Accuracy = 0.68888889
+[Epoch 4] Training: MSE=0.20470980, CE=1.30610298, LLH=0.63777212, correct=70/105, Accuracy = 0.66666667
+          Test : MSE=0.19508916, CE=1.26015404, LLH=0.60616157, correct=32/45, Accuracy = 0.71111111
+[Epoch 5] Training: MSE=0.19849312, CE=1.27429647, LLH=0.62072181, correct=70/105, Accuracy = 0.66666667
+          Test : MSE=0.18912184, CE=1.22896067, LLH=0.58955239, correct=32/45, Accuracy = 0.71111111
+[Epoch 6] Training: MSE=0.19334359, CE=1.24722179, LLH=0.60865334, correct=72/105, Accuracy = 0.68571429
+          Test : MSE=0.18407472, CE=1.20189470, LLH=0.57750614, correct=33/45, Accuracy = 0.73333333
+[Epoch 7] Training: MSE=0.18886665, CE=1.22319927, LLH=0.59809536, correct=73/105, Accuracy = 0.69523810
+          Test : MSE=0.17967259, CE=1.17776403, LLH=0.56690316, correct=33/45, Accuracy = 0.73333333
+[Epoch 8] Training: MSE=0.18490720, CE=1.20152421, LLH=0.58828057, correct=76/105, Accuracy = 0.72380952
+          Test : MSE=0.17579328, CE=1.15600580, LLH=0.55705437, correct=33/45, Accuracy = 0.73333333
+[Epoch 9] Training: MSE=0.18138247, CE=1.18184746, LLH=0.57900242, correct=76/105, Accuracy = 0.72380952
+          Test : MSE=0.17236238, CE=1.13631854, LLH=0.54777264, correct=34/45, Accuracy = 0.75555556
+[Epoch 10] Training: MSE=0.17822965, CE=1.16393955, LLH=0.57019739, correct=78/105, Accuracy = 0.74285714
+          Test : MSE=0.16931621, CE=1.11848123, LLH=0.53899713, correct=34/45, Accuracy = 0.75555556
+[Epoch 11] Training: MSE=0.17539131, CE=1.14759526, LLH=0.56185194, correct=78/105, Accuracy = 0.74285714
+          Test : MSE=0.16659266, CE=1.10227549, LLH=0.53070956, correct=34/45, Accuracy = 0.75555556
+[Epoch 12] Training: MSE=0.17281462, CE=1.13261259, LLH=0.55396524, correct=82/105, Accuracy = 0.78095238
+          Test : MSE=0.16413366, CE=1.08747801, LLH=0.52290148, correct=34/45, Accuracy = 0.75555556
+[Epoch 13] Training: MSE=0.17045301, CE=1.11879892, LLH=0.54653100, correct=83/105, Accuracy = 0.79047619
+          Test : MSE=0.16188851, CE=1.07387615, LLH=0.51555934, correct=35/45, Accuracy = 0.77777778
+[Epoch 14] Training: MSE=0.16826685, CE=1.10597924, LLH=0.53953308, correct=83/105, Accuracy = 0.79047619
+          Test : MSE=0.15981493, CE=1.06127999, LLH=0.50866135, correct=35/45, Accuracy = 0.77777778
+[Epoch 15] Training: MSE=0.16622318, CE=1.09400032, LLH=0.53294732, correct=85/105, Accuracy = 0.80952381
+          Test : MSE=0.15787860, CE=1.04952650, LLH=0.50217928, correct=36/45, Accuracy = 0.80000000
+[Epoch 16] Training: MSE=0.16429508, CE=1.08273114, LLH=0.52674433, correct=85/105, Accuracy = 0.80952381
+          Test : MSE=0.15605207, CE=1.03847896, LLH=0.49608108, correct=38/45, Accuracy = 0.84444444
+[Epoch 17] Training: MSE=0.16246081, CE=1.07206138, LLH=0.52089186, correct=88/105, Accuracy = 0.83809524
+          Test : MSE=0.15431367, CE=1.02802423, LLH=0.49033278, correct=38/45, Accuracy = 0.84444444
+[Epoch 18] Training: MSE=0.16070292, CE=1.06189905, LLH=0.51535647, correct=89/105, Accuracy = 0.84761905
+          Test : MSE=0.15264640, CE=1.01806948, LLH=0.48490008, correct=38/45, Accuracy = 0.84444444
+[Epoch 19] Training: MSE=0.15900748, CE=1.05216777, LLH=0.51010492, correct=90/105, Accuracy = 0.85714286
+          Test : MSE=0.15103701, CE=1.00853885, LLH=0.47974943, correct=38/45, Accuracy = 0.84444444
+[Epoch 20] Training: MSE=0.15736339, CE=1.04280430, LLH=0.50510510, correct=91/105, Accuracy = 0.86666667
+          Test : MSE=0.14947514, CE=0.99937036, LLH=0.47484887, correct=38/45, Accuracy = 0.84444444
+[Epoch 21] Training: MSE=0.15576175, CE=1.03375621, LLH=0.50032680, correct=91/105, Accuracy = 0.86666667
+          Test : MSE=0.14795268, CE=0.99051331, LLH=0.47016859, correct=38/45, Accuracy = 0.84444444
+[Epoch 22] Training: MSE=0.15419540, CE=1.02497994, LLH=0.49574213, correct=91/105, Accuracy = 0.86666667
+          Test : MSE=0.14646326, CE=0.98192603, LLH=0.46568130, correct=38/45, Accuracy = 0.84444444
+[Epoch 23] Training: MSE=0.15265857, CE=1.01643914, LLH=0.49132578, correct=93/105, Accuracy = 0.88571429
+          Test : MSE=0.14500177, CE=0.97357406, LLH=0.46136238, correct=38/45, Accuracy = 0.84444444
+[Epoch 24] Training: MSE=0.15114652, CE=1.00810338, LLH=0.48705516, correct=94/105, Accuracy = 0.89523810
+          Test : MSE=0.14356411, CE=0.96542873, LLH=0.45718993, correct=39/45, Accuracy = 0.86666667
+[Epoch 25] Training: MSE=0.14965537, CE=0.99994703, LLH=0.48291031, correct=94/105, Accuracy = 0.89523810
+          Test : MSE=0.14214695, CE=0.95746599, LLH=0.45314472, correct=39/45, Accuracy = 0.86666667
+[Epoch 26] Training: MSE=0.14818189, CE=0.99194840, LLH=0.47887382, correct=94/105, Accuracy = 0.89523810
+          Test : MSE=0.14074752, CE=0.94966557, LLH=0.44920996, correct=40/45, Accuracy = 0.88888889
+[Epoch 27] Training: MSE=0.14672340, CE=0.98408906, LLH=0.47493062, correct=94/105, Accuracy = 0.89523810
+          Test : MSE=0.13936352, CE=0.94201021, LLH=0.44537121, correct=41/45, Accuracy = 0.91111111
+[Epoch 28] Training: MSE=0.14527765, CE=0.97635329, LLH=0.47106779, correct=94/105, Accuracy = 0.89523810
+          Test : MSE=0.13799303, CE=0.93448520, LLH=0.44161607, correct=41/45, Accuracy = 0.91111111
+[Epoch 29] Training: MSE=0.14384278, CE=0.96872765, LLH=0.46727431, correct=95/105, Accuracy = 0.90476190
+          Test : MSE=0.13663445, CE=0.92707792, LLH=0.43793400, correct=41/45, Accuracy = 0.91111111
+[Epoch 30] Training: MSE=0.14241721, CE=0.96120058, LLH=0.46354083, correct=95/105, Accuracy = 0.90476190
+          Test : MSE=0.13528641, CE=0.91977752, LLH=0.43431609, correct=41/45, Accuracy = 0.91111111
+[Epoch 31] Training: MSE=0.14099964, CE=0.95376218, LLH=0.45985949, correct=95/105, Accuracy = 0.90476190
+          Test : MSE=0.13394780, CE=0.91257464, LLH=0.43075484, correct=41/45, Accuracy = 0.91111111
+[Epoch 32] Training: MSE=0.13958901, CE=0.94640394, LLH=0.45622369, correct=95/105, Accuracy = 0.90476190
+          Test : MSE=0.13261767, CE=0.90546123, LLH=0.42724397, correct=41/45, Accuracy = 0.91111111
+[Epoch 33] Training: MSE=0.13818443, CE=0.93911854, LLH=0.45262791, correct=95/105, Accuracy = 0.90476190
+          Test : MSE=0.13129527, CE=0.89843035, LLH=0.42377824, correct=41/45, Accuracy = 0.91111111
+[Epoch 34] Training: MSE=0.13678521, CE=0.93189973, LLH=0.44906756, correct=95/105, Accuracy = 0.90476190
+          Test : MSE=0.12998000, CE=0.89147602, LLH=0.42035330, correct=41/45, Accuracy = 0.91111111
+[Epoch 35] Training: MSE=0.13539083, CE=0.92474217, LLH=0.44553884, correct=96/105, Accuracy = 0.91428571
+          Test : MSE=0.12867138, CE=0.88459314, LLH=0.41696558, correct=41/45, Accuracy = 0.91111111
+[Epoch 36] Training: MSE=0.13400088, CE=0.91764134, LLH=0.44203865, correct=96/105, Accuracy = 0.91428571
+          Test : MSE=0.12736907, CE=0.87777735, LLH=0.41361213, correct=41/45, Accuracy = 0.91111111
+[Epoch 37] Training: MSE=0.13261510, CE=0.91059343, LLH=0.43856443, correct=96/105, Accuracy = 0.91428571
+          Test : MSE=0.12607285, CE=0.87102498, LLH=0.41029056, correct=41/45, Accuracy = 0.91111111
+[Epoch 38] Training: MSE=0.13123334, CE=0.90359526, LLH=0.43511413, correct=96/105, Accuracy = 0.91428571
+          Test : MSE=0.12478258, CE=0.86433292, LLH=0.40699893, correct=41/45, Accuracy = 0.91111111
+[Epoch 39] Training: MSE=0.12985554, CE=0.89664424, LLH=0.43168612, correct=97/105, Accuracy = 0.92380952
+          Test : MSE=0.12349822, CE=0.85769862, LLH=0.40373571, correct=41/45, Accuracy = 0.91111111
+[Epoch 40] Training: MSE=0.12848174, CE=0.88973826, LLH=0.42827912, correct=97/105, Accuracy = 0.92380952
+          Test : MSE=0.12221982, CE=0.85112000, LLH=0.40049971, correct=41/45, Accuracy = 0.91111111
+[Epoch 41] Training: MSE=0.12711206, CE=0.88287570, LLH=0.42489215, correct=98/105, Accuracy = 0.93333333
+          Test : MSE=0.12094748, CE=0.84459538, LLH=0.39728999, correct=41/45, Accuracy = 0.91111111
+[Epoch 42] Training: MSE=0.12574669, CE=0.87605530, LLH=0.42152453, correct=98/105, Accuracy = 0.93333333
+          Test : MSE=0.11968140, CE=0.83812348, LLH=0.39410589, correct=41/45, Accuracy = 0.91111111
+[Epoch 43] Training: MSE=0.12438589, CE=0.86927620, LLH=0.41817576, correct=99/105, Accuracy = 0.94285714
+          Test : MSE=0.11842180, CE=0.83170334, LLH=0.39094696, correct=41/45, Accuracy = 0.91111111
+[Epoch 44] Training: MSE=0.12302997, CE=0.86253784, LLH=0.41484558, correct=99/105, Accuracy = 0.94285714
+          Test : MSE=0.11716896, CE=0.82533430, LLH=0.38781289, correct=41/45, Accuracy = 0.91111111
+[Epoch 45] Training: MSE=0.12167929, CE=0.85583997, LLH=0.41153388, correct=99/105, Accuracy = 0.94285714
+          Test : MSE=0.11592322, CE=0.81901594, LLH=0.38470356, correct=41/45, Accuracy = 0.91111111
+[Epoch 46] Training: MSE=0.12033425, CE=0.84918257, LLH=0.40824070, correct=99/105, Accuracy = 0.94285714
+          Test : MSE=0.11468493, CE=0.81274811, LLH=0.38161896, correct=41/45, Accuracy = 0.91111111
+[Epoch 47] Training: MSE=0.11899528, CE=0.84256585, LLH=0.40496622, correct=99/105, Accuracy = 0.94285714
+          Test : MSE=0.11345447, CE=0.80653082, LLH=0.37855920, correct=41/45, Accuracy = 0.91111111
+[Epoch 48] Training: MSE=0.11766285, CE=0.83599022, LLH=0.40171071, correct=99/105, Accuracy = 0.94285714
+          Test : MSE=0.11223227, CE=0.80036426, LLH=0.37552447, correct=42/45, Accuracy = 0.93333333
+[Epoch 49] Training: MSE=0.11633744, CE=0.82945625, LLH=0.39847455, correct=99/105, Accuracy = 0.94285714
+          Test : MSE=0.11101875, CE=0.79424878, LLH=0.37251505, correct=42/45, Accuracy = 0.93333333
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#question 4 </span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[53]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">train_value</span> <span class="o">=</span> <span class="n">iris_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">train_MSE</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">train_ce</span> <span class="o">=</span><span class="p">[]</span>
+<span class="n">train_LLH</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">train_value</span><span class="p">:</span>
+    <span class="n">train_MSE</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">train_ce</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">train_LLH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[54]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">pltMSE_train</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_MSE</span><span class="p">)</span>
+<span class="n">pltce_train</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_ce</span><span class="p">)</span>
+<span class="n">pltLLH_train</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_LLH</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;MSE&#39;</span><span class="p">,</span><span class="s1">&#39;CrossEntropy&#39;</span><span class="p">,</span> <span class="s1">&#39;LogLikelihood&#39;</span><span class="p">],</span> <span class="n">loc</span> <span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;epoc&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1">#4.d.1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea">
+<img loading="lazy" src="javascript://"/>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[55]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#4.d.2</span>
+
+<span class="n">testing_value</span> <span class="o">=</span> <span class="n">iris_res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">testing_MSE</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">testing_ce</span> <span class="o">=</span><span class="p">[]</span>
+<span class="n">testing_LLH</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">testing_value</span><span class="p">:</span>
+    <span class="n">testing_MSE</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">testing_ce</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">testing_LLH</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[56]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">plotMSE_train</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_MSE</span><span class="p">)</span>
+<span class="n">plotMSE_test</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">testing_MSE</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Train&#39;</span><span class="p">,</span> <span class="s1">&#39;Test&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea">
+<img loading="lazy" src="javascript://"/>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[57]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">pltce_train</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_ce</span><span class="p">)</span>
+<span class="n">plotce_test</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">testing_ce</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Train&#39;</span><span class="p">,</span> <span class="s1">&#39;Test&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea">
+<img loading="lazy" src="javascript://"/>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[58]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">pltLLH_train</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_LLH</span><span class="p">)</span>
+<span class="n">plotLLH_test</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">testing_LLH</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Train&#39;</span><span class="p">,</span> <span class="s1">&#39;Test&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea">
+<img loading="lazy" src="javascript://"/>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[&#160;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[&#160;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[&#160;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&#160;[&#160;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+
+
+ 
+
+
+
+<script type="text/javascript" src="/d2l/common/math/MathML.js?v=20.19.12.19472-324 "></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() { D2LMathML.DesktopInit('https://s.brightspace.com/lib/mathjax/2.6.1/MathJax.js?config=MML_HTMLorMML','https://s.brightspace.com/lib/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML'); });</script></body></html>
